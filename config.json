@@ -1,0 +1,16 @@
+{
+    "Web": {
+        "Port": "3000",
+        "Domain": ""
+    },
+    "Key": "",
+    "fileNameLength": 8,
+    "maxUploadSize": 1024,
+    "allowedFileTypes": {
+        "image": [".png", ".jpg", ".gif", ".webp", ".ico", ".raw"],
+        "video": [".mp4", ".gifv"],
+        "audio": [".mp3"],
+        "html": [".html"]
+    }
+}
+  
