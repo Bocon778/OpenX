@@ -3,7 +3,7 @@
         "Port": "3000",
         "Domain": ""
     },
-    "Key": "",
+    "Key": "123456789",
     "fileNameLength": 8,
     "maxUploadSize": 1024,
     "allowedFileTypes": {
@@ -13,4 +13,3 @@
         "html": [".html"]
     }
 }
-  
