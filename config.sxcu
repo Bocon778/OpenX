@@ -1,5 +1,5 @@
 {
-  "Name": "ExpressJS Uploader",
+  "Name": "OpenX",
   "DestinationType": "ImageUploader, TextUploader, FileUploader",
   "RequestType": "POST",
   "RequestURL": "https://yourdomain.com/api/upload",
