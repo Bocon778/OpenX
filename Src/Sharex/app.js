@@ -2,11 +2,17 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 const ejs = require('ejs');
-const fs = require("node:fs")
-const isBot = require("is-bot")
+const fs = require('fs').promises;
+const isBot = require('is-bot');
 const bodyParser = require('body-parser');
 const path = require('path');
-const {getFileType} = require("../util/fileutil.js")
+const { getFileType } = require('../util/fileutil.js');
+const config = require('../../config.json');
+
+
+app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 // Routing
@@ -14,39 +20,126 @@ const {getFileType} = require("../util/fileutil.js")
 const uploadRouter = require('./Api/uploadApi');
 router.use('/api', uploadRouter);
 
+// StatsApi Router
+const filesRouter = require('./Api/statsApi');
+app.use('/api/files', filesRouter);
+
+// UploadInfoApi Router
+const getImageInfo = async () => {
+  const uploadsPath = path.join(__dirname, '../../Uploads');
+  const imageInfo = [];
+
+  try {
+    const directories = await fs.readdir(uploadsPath, { withFileTypes: true });
+
+    for (const dirent of directories) {
+      if (dirent.isDirectory()) {
+        const directoryPath = path.join(uploadsPath, dirent.name);
+        const files = await fs.readdir(directoryPath);
+
+        for (const file of files) {
+          const filePath = path.join(directoryPath, file);
+          const stats = await fs.stat(filePath);
+
+          if (/\.(png|jpe?g|gif)$/i.test(file)) {
+            imageInfo.push({
+              filename: file,
+              directory: dirent.name,
+              uploadDateTime: stats.birthtime,
+            });
+          }
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching image information:', error.message);
+  }
+
+  return imageInfo;
+};
+
+router.use(async (req, res, next) => {
+  const imageInfo = await getImageInfo();
+  req.imageInfo = imageInfo;
+  next();
+});
+
+
+// Views Router
+const views = new Map();
+router.use((req, res, next) => {
+  if (!isBot(req.headers['user-agent'])) {
+    const ip = req.ip || req.connection.remoteAddress;
+    if (!views.has(ip)) {
+      views.set(ip, true);
+      const viewCount = views.size;
+    }
+  }
+  next();
+});
+
+router.get('/api/viewcount/:filename', (req, res) => {
+  const viewCount = views.size;
+  res.json({ viewCount });
+});
+
+// AuthApi Router
+const authRouter = require('./Api/authApi.js');
+app.use('/api/auth', authRouter);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Pages
 router.get('/', (req, res) => {
-    console.log(__dirname);
-    res.render('index.ejs');
+  res.render('index.ejs');
+});
+
+router.get('/login', (req, res) => {
+  res.render('login.ejs', {config: config});
+});
+
+router.get('/dashboard', (req, res) => {
+  res.render('dashboard/index.ejs');
 });
 
 router.get('/i/:filename', (req, res) => {
-    console.log(`Received a thing for file name ${req.params.filename}`);
-    let fileType = getFileType(req.params.filename);
-    if(fileType==="other") {
-        return res.sendStatus(400);
-    }
-    res.render("i/index.ejs", {filename: req.params.filename, fileType})
-})
+  let fileType = getFileType(req.params.filename);
+  if (fileType === 'other') {
+    return res.sendStatus(400);
+  }
+  const uploadInfo = req.imageInfo.find(
+    (image) => image.filename === req.params.filename
+  );
+  res.render('i/index.ejs', { filename: req.params.filename, fileType, uploadInfo });
+});
 
-router.get('/raw/i/:filename', (req, res, next) => {
-    // if(!isBot(req.headers["user-agent"])) {
-    //     return res.redirect(`/i/${req.params.filename}`);
-    // }
-    // next();
-    let fileName = req.params.filename
-    let fileType = getFileType(fileName);
-    if(fileType==="other") {
-        return res.sendStatus(400);
-    }
-    let filePath = path.join(__dirname, "../../", "Uploads", (fileType.charAt(0).toUpperCase() + fileType.slice(1)), fileName);
+router.get('/raw/i/:filename', async (req, res, next) => {
+  let fileName = req.params.filename;
+  let fileType = getFileType(fileName);
+  if (fileType === 'other') {
+    return res.sendStatus(400);
+  }
+  let filePath = path.join(__dirname, '../../', 'Uploads', (fileType.charAt(0).toUpperCase() + fileType.slice(1)), fileName);
 
-    console.log(filePath);
-    
-    if(!fs.existsSync(filePath)) {
-        return res.sendStatus(404);
-    }
-    res.sendFile(filePath);
-})
+  try {
+    await fs.access(filePath);
+  } catch (err) {
+    return res.sendStatus(404);
+  }
 
+  res.sendFile(filePath);
+});
 
-module.exports = router
+module.exports = router;

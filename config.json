@@ -11,5 +11,9 @@
         "video": [".mp4", ".gifv"],
         "audio": [".mp3"],
         "html": [".html"]
+    },
+    "Admin": {
+        "Username": "admin",
+        "Password": "12345"
     }
 }
