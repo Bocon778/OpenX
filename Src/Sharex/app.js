@@ -1,29 +1,27 @@
 const express = require('express');
-const app = express();
 const router = express.Router();
-const ejs = require('ejs');
 const fs = require('fs').promises;
 const isBot = require('is-bot');
 const bodyParser = require('body-parser');
 const path = require('path');
-const { getFileType } = require('../util/fileutil.js');
+const { getFileType } = require('../Utils/fileutil.js');
 const config = require('../../config.json');
+const session = require('express-session');
 
-
-app.use(express.json());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+router.use(express.json());
+router.use(bodyParser.json());
+router.use(express.urlencoded({ extended: true }));
+router.use(session({
+    secret: 'OpenX',
+    resave: false,
+    saveUninitialized: true,
+}));
 
 
 // Routing
 // UploadApi Router
-const uploadRouter = require('./Api/uploadApi');
-router.use('/api', uploadRouter);
-
-// StatsApi Router
-const filesRouter = require('./Api/statsApi');
-app.use('/api/files', filesRouter);
-
+const uploadRouter = require('./Api/uploadApi'); 
+router.use('/api', uploadRouter); 
 // UploadInfoApi Router
 const getImageInfo = async () => {
   const uploadsPath = path.join(__dirname, '../../Uploads');
@@ -83,19 +81,26 @@ router.get('/api/viewcount/:filename', (req, res) => {
   res.json({ viewCount });
 });
 
-// AuthApi Router
-const authRouter = require('./Api/authApi.js');
-app.use('/api/auth', authRouter);
 
+// InfoApi Router
+const infoRouter = require('./Api/infoApi.js');
+router.use('/api', infoRouter);
 
+// LoginApi Router
+const loginRoute = require('./Api/loginApi.js');
+router.use('/api/login', loginRoute);
 
+// LogoutApi Router
+const logoutRoute = require('./Api/logoutApi.js');
+router.use('/api', logoutRoute);
 
+// DashboardApi Router
+const dashboardRoute = require('./Api/dashboardApi.js');
+router.use('/dashboard', dashboardRoute);
 
-
-
-
-
-
+// DashboardFilesApi Router
+const viewFilesRoute = require('./Api/viewApi.js');
+router.use('/api', viewFilesRoute);
 
 
 
@@ -110,9 +115,16 @@ router.get('/login', (req, res) => {
   res.render('login.ejs', {config: config});
 });
 
+
+
 router.get('/dashboard', (req, res) => {
   res.render('dashboard/index.ejs');
 });
+
+router.get('/dashboard/files', (req, res) => {
+  res.render('dashboard/files.ejs');
+});
+
 
 router.get('/i/:filename', (req, res) => {
   let fileType = getFileType(req.params.filename);
@@ -141,5 +153,6 @@ router.get('/raw/i/:filename', async (req, res, next) => {
 
   res.sendFile(filePath);
 });
+
 
 module.exports = router;

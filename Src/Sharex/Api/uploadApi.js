@@ -3,12 +3,13 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const randomstring = require('randomstring');
-const {getFileType} = require("../../util/fileutil.js")
+const {getFileType} = require("../../Utils/fileutil.js")
 
 const router = express.Router();
 
 // Load Configuration
 const config = require("../../../config.json");
+const domain = config.Web.Domain
 const fileNameLength = config.fileNameLength || 8;
 
 // Define Allowed File Extensions And Their Corresponding Directories
@@ -53,7 +54,7 @@ router.post('/upload', (req, res) => {
     }
     
     // File Uploaded Successfully
-    const viewURL = `http://localhost:3000/i/${path.basename(req.file.path)}`;
+    const viewURL = `${domain}/i/${path.basename(req.file.path)}`;
     res.status(200).json({ success: true, filePath: viewURL });
   });
 });

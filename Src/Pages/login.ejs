@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../Styles/Global.css">
 </head>
 
 <body class="bg-gradient-to-r from-black via-gray-900 to-black text-white min-h-screen flex flex-col">
@@ -18,9 +19,7 @@
     <div class="flex-1 flex items-center justify-center">
         <div class="bg-gray-800 p-8 rounded-md shadow-md w-96">
             <h2 class="text-2xl font-extrabold mb-4">Login</h2>
-
             <div id="errorMessage" class="text-red-500 mb-4 hidden">Wrong Username or Password</div>
-
             <form id="loginForm" class="space-y-4">
                 <div class="flex flex-col">
                     <label for="username" class="text-white">Username:</label>
@@ -34,7 +33,6 @@
             </form>
         </div>
     </div>
-
     <script>
         async function submitForm() {
             const username = document.getElementById('username').value;
@@ -42,7 +40,7 @@
             const errorMessage = document.getElementById('errorMessage');
     
             try {
-                const response = await fetch('/api/auth/login', {
+                const response = await fetch('/api/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -55,6 +53,7 @@
                 if (data.success) {
                     window.location.href = data.redirect;
                 } else {
+                    errorMessage.textContent = data.message || 'An error occurred.';
                     errorMessage.classList.remove('hidden');
                 }
             } catch (error) {
@@ -62,8 +61,13 @@
                 errorMessage.classList.remove('hidden');
             }
         }
+    
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                submitForm();
+            }
+        });
     </script>
-
 </body>
 
 </html>
