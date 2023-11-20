@@ -56,7 +56,7 @@ You can keep your server runing forever if you use a process manager, like pm2. 
 
 # Using DBH [Free Hosting]
 <details open>
-<summary>Installation Using DBH [Dan Bot Hosting](https://discord.gg/dbh)</summary>
+<summary>Installation Using DBH</summary>
 
 Frist Join The Discord Server [DBH / Dan Bot Hosting](https://discord.gg/dbh)
 If Your New User Please Do 
