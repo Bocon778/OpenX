@@ -9,6 +9,7 @@ ShareX Upload Server
 - Frontend Upload Page [Example](https://demo-openx.wizq.me/i/07kZNXFt.png)
 
 
+# Using Vps/Dedi
 <details open>
   <summary>Installation</summary>
   
@@ -53,11 +54,32 @@ You can keep your server runing forever if you use a process manager, like pm2. 
 </details>
 
 
+# Using DBH [Free Hosting]
+<details open>
+<summary>Installation Using DBH [Dan Bot Hosting](https://discord.gg/dbh)</summary>
 
+Frist Join The Discord Server [DBH / Dan Bot Hosting](https://discord.gg/dbh)
+If Your New User Please Do 
+`DBH!user new`
+After Creating Your Account, Link Your Account To Panel By
+`DBH!user link`
+After Linking You Can Create Sever For OpenX By,
+`DBH!server create OpenX OpenX` 
+If Your A Donator In DBH Use
+`DBH!server create-donator OpenX OpenX`
 
+Then That's It Login In To Your Panel You Will See A Server With Name [OpenX]
+Go To Startup Bar And Configure Your Server Port Will Already Be Configured You Can Configure Rest Of Them In Startup Tab Of The Panel
+
+[Dan Made A Custom Egg For DBH Users To Able To Use OpenX] 
+</details>
+
+# Demo 
 
 
 
 
 # Credits
-Thanks To [@flaxeneel2](https://github.com/flaxeneel2/) For Helping In Backend 
+Thanks To [@flaxeneel2](https://github.com/flaxeneel2/) For Fixing Backend Issues I Made.
+Thanks To [@WilliamDavidHarrison](https://github.com/WilliamDavidHarrison) For Providing The Project Name
+Thanks To [@Caliwyr](https://github.com/Caliwyr) For Providing Ideas To Implement In This Project
