@@ -87,9 +87,17 @@ Password: Admin
 ![image](https://github.com/Wizqdev/OpenX/assets/87972700/8c16fa18-2606-4544-854e-e3c77859d765)<br />
 
 
-<h1>Hosted At DBH</h1>
+<h2>Hosted At DBH</h2>
 
 
+# Todo
+[ ] Url Shortnetr
+[ ] Paste Bin
+[ ] Multi-User
+[ ] Multi-Database Support
+[ ] Discord Bot Integration
+[ ] 2FA System
+[ ] Api
 
 # Credits
 Thanks To [@flaxeneel2](https://github.com/flaxeneel2/) For Fixing Backend Issues I Made.<br />
