@@ -58,18 +58,18 @@ You can keep your server runing forever if you use a process manager, like pm2. 
 <details open>
 <summary>Installation Using DBH</summary>
 
-Frist Join The Discord Server [DBH / Dan Bot Hosting](https://discord.gg/dbh)
-If Your New User Please Do 
-`DBH!user new`
-After Creating Your Account, Link Your Account To Panel By
-`DBH!user link`
-After Linking You Can Create Sever For OpenX By,
-`DBH!server create OpenX OpenX` 
-If Your A Donator In DBH Use
-`DBH!server create-donator OpenX OpenX`
+Frist Join The Discord Server [DBH / Dan Bot Hosting](https://discord.gg/dbh)<br />
+If Your New User Please Do <br />
+`DBH!user new`<br />
+After Creating Your Account, Link Your Account To Panel By<br />
+`DBH!user link`<br />
+After Linking You Can Create Sever For OpenX By,<br />
+`DBH!server create OpenX OpenX` <br />
+If Your A Donator In DBH Use<br />
+`DBH!server create-donator OpenX OpenX`<br />
 
-Then That's It Login In To Your Panel You Will See A Server With Name [OpenX]
-Go To Startup Bar And Configure Your Server Port Will Already Be Configured You Can Configure Rest Of Them In Startup Tab Of The Panel
+Then That's It Login In To Your Panel You Will See A Server With Name [OpenX]<br />
+Go To Startup Bar And Configure Your Server Port Will Already Be Configured You Can Configure Rest Of Them In Startup Tab Of The Panel<br />
 
 [Dan Made A Custom Egg For DBH Users To Able To Use OpenX] 
 </details>
