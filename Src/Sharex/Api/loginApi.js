@@ -4,10 +4,9 @@ const session = require('express-session');
 const router = express.Router();
 const config = require('../../../config.json');
 
-// Use The Session Middleware
 router.use(
   session({
-    secret: 'OPENXSESSIONSECRETIFYOURELOOKINGHEREUCANCHANGE',
+    secret: config.Web.Secret,
     resave: false,
     saveUninitialized: true,
   })

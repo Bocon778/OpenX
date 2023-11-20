@@ -7,13 +7,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <link rel="stylesheet" href="../../Styles/Global.css">
-    <title>Dashboard</title>
+    <title>OpenX</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
 </head>
 
-<body class="font-mono bg-black text-green-400 flex flex-col h-screen">
-        </main>
-    </div>
+<body class="font-mono bg-black text-green-300 flex flex-col h-screen">
+    <header class="bg-gray-900 p-4 flex justify-between items-center">
+        <div>
+            <h1 class="text-3xl font-extrabold text-green-500">OpenX</h1>
+        </div>
+        <div class="flex items-center space-x-4">
+            <a href="https://github.com/Wizqdev/OpenX" class="text-green-400 flex items-center hover:text-green-300">
+                <i class="fab fa-github mr-2"></i>
+                <span>Github</span>
+            </a>
+            <div class="border-l-2 border-green-500 bg-gray-800 px-2 py-1 rounded">
+                <% if (loggedIn) { %>
+                    <a href="/dashboard" class="text-green-400 flex items-center hover:text-green-300">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span class="ml-2">Dashboard</span>
+                    </a>
+                <% } else { %>
+                    <a href="/login" class="text-green-400 flex items-center hover:text-green-300">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span class="ml-2">Login</span>
+                    </a>
+                <% } %>
+            </div>
+        </div>        
+    </header>
+
+    <main class="flex-1 p-8 bg-gradient-to-r from-black via-gray-900 to-black flex items-center justify-center">
+        <div class="text-center">
+            <h2 class="text-4xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-green-500 via-blue-500 to-purple-500">
+                <span class="hover:scale-110 transition-transform duration-300">
+                    The Next Generation
+                </span>
+            </h2>
+            <h1 class="text-3xl font-extrabold mb-4 text-green-500">ShareX / File Upload Server</h1>
+        </div>
+    </main>
 </body>
 
 </html>

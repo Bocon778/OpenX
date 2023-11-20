@@ -3,7 +3,6 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs').promises;
 
-// Assuming the sharex folder is in the parent directory
 const mediaFolder = path.join(__dirname, '../../../Uploads');
 
 router.get('/media', async (req, res) => {
@@ -11,7 +10,6 @@ router.get('/media', async (req, res) => {
     const mediaFiles = await getAllMediaFiles(mediaFolder);
     res.json(mediaFiles);
   } catch (error) {
-    console.error('Error reading media folder:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });

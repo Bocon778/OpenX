@@ -1,7 +1,8 @@
 {
     "Web": {
-        "Port": "3000",
-        "Domain": ""
+        "Port": "4738",
+        "Domain": "",
+        "Secret": "MEOWWWWWWWWW"
     },
     "Key": "123456789",
     "fileNameLength": 8,
@@ -13,7 +14,7 @@
         "html": [".html"]
     },
     "Admin": {
-        "Username": "admin",
-        "Password": "12345"
+        "Username": "Admin",
+        "Password": "Admin"
     }
 }

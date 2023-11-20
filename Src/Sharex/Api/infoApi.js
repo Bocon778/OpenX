@@ -26,15 +26,22 @@ router.get('/space-used', async (req, res) => {
     const stats = await getFilesStatsRecursively(folderPath);
     let spaceUsed = 0;
     stats.forEach(stat => {
-      spaceUsed+=stat.size
-    })
-    let spaceUsedFormatted = formatBytes(spaceUsed)
-    res.json({spaceUsedFormatted, spaceUsed}) 
+      spaceUsed += stat.size
+    });
+    let spaceUsedFormatted = formatBytes(spaceUsed);
+    res.json({ spaceUsedFormatted, spaceUsed });
   } catch (error) {
     console.error('Error Reading Directory:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+function formatBytes(bytes) {
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+  if (bytes === 0) return '0 Byte';
+  const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+  return Math.round((bytes / Math.pow(1024, i))) + ' ' + sizes[i];
+}
 
 function formatBytes(bytes) {
   const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];

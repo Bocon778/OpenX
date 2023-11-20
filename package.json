@@ -2,7 +2,7 @@
   "name": "openx",
   "version": "1.0.0",
   "description": "A ShareX Server",
-  "main": "src/index.js",
+  "main": "Src/index.js",
   "scripts": {},
   "author": "Wizq",
   "license": "ISC",

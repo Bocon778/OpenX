@@ -6,57 +6,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/simplebar@5.3.0/dist/simplebar.min.css" integrity="sha384-vcFQoMxH6bqF4Ji1LjyXZRxvJV9Kk1CkD6T9fW8ArDAAM+cMffBqYtjqGU1cb+ug" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha384-0I1MkVB2OABdZLlKDBuYZj9rslUUL2OBFuP8maXa7sCSqjMYUQ6BKKpjoZyOg8Rm" crossorigin="anonymous">
     <link rel="stylesheet" href="../../Styles/Global.css">
+    <title>Dashboard - Files</title>
     <style>
-        ::webkit-scrollbar {
-            width: 12px;
-        }
-
-        ::webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        ::webkit-scrollbar-thumb {
-            background-color: transparent;
-            border-radius: 6px;
-            border: 3px solid transparent;
-        }
-
-        ::webkit-scrollbar-thumb:hover {
-            background-color: transparent;
+        .hacker-font {
+            font-family: 'Courier New', Courier, monospace;
         }
     </style>
-    <title>Dashboard - Files</title>
 </head>
 
-<body class="font-sans bg-gray-900 text-white flex flex-col h-screen">
-    <header class="bg-gray-800 p-4">
+<body class="font-sans bg-black text-green-400 hacker-font flex flex-col h-screen">
+    <header class="bg-black p-4 border-b border-green-500">
         <div class="container mx-auto flex items-center justify-between">
             <a href="/">
-                <h1 class="text-3xl font-extrabold text-yellow-400">OpenX</h1>
+                <h1 class="text-3xl font-extrabold text-green-500">OpenX</h1>
             </a>
+            <span class="text-xl text-green-500 font-bold"><%= username %></span>
+
         </div>
     </header>
 
     <div class="flex-1 flex overflow-hidden">
-        <aside class="w-1/6 h-screen bg-gray-800 text-white overflow-y-auto">
+        <aside class="w-1/6 h-screen bg-black overflow-hidden border-r border-green-500">
             <nav class="p-4">
                 <ul>
-                    <a href="/dashboard" class="text-white">
-                        <li class="flex items-center p-3 hover:bg-gray-700 transition duration-300 rounded-md">
+                    <a href="/dashboard" class="text-green-500">
+                        <li class="flex items-center p-3 hover:bg-gray-800 transition duration-300 rounded-md">
                             <i class="fas fa-home text-xl mr-2"></i>
                             <span class="ml-2 text-lg">Home</span>
                         </li>
                     </a>
-                    <a href="/dashboard/files" class="text-white">
-                        <li class="flex items-center p-3 hover:bg-gray-700 transition duration-300 rounded-md">
+                    <a href="/dashboard/files" class="text-green-500">
+                        <li class="flex items-center p-3 mt-auto hover:bg-gray-800 transition duration-300 rounded-md gap-1">
                             <i class="fas fa-file-alt text-xl mr-2"></i>
-                            <span class="ml-2 text-lg">&nbsp;Files</span>
+                            <span class="ml-2 text-lg">Files</span>
                         </li>
                     </a>
-                    <a href="/api/logout" class="text-white">
-                        <li class="flex items-center p-3 mt-auto hover:bg-gray-700 transition duration-300 rounded-md">
+                    <a href="/logout" class="text-green-500">
+                        <li class="flex items-center p-3 mt-auto hover:bg-gray-800 transition duration-300 rounded-md">
                             <i class="fas fa-sign-out-alt text-xl mr-2"></i>
                             <span class="ml-2 text-lg">Logout</span>
                         </li>
@@ -65,14 +55,18 @@
             </nav>
         </aside>
 
-        <main class="flex-1 p-8 bg-gradient-to-r from-gray-900 via-gray-900 to-black overflow-y-auto max-h-screen">
-            <div class="bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 p-8 rounded-md shadow-md">
-                <h2 class="text-3xl font-extrabold mb-4 text-blue-400">Files</h2>
-                <div id="mediaList" class="grid grid-cols-3 gap-4"></div>
+        <main class="flex-1 p-8 bg-black overflow-y-auto max-h-screen" data-simplebar>
+            <div class="bg-gray-800 p-8 rounded-md shadow-md border border-green-500">
+                <h2 class="text-3xl font-extrabold mb-4 text-green-400">Files</h2>
+                <div id="mediaList" class="grid grid-cols-3 gap-4">
+                </div>
             </div>
+        </main>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+            <script src="https://unpkg.com/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha384-xA2uXU4gzmEPjEmV1MK6vcdJhe/EGI5QQpcDlNBZayjaVS/4GYsIz0HpXRIpd2j2" crossorigin="anonymous"></script>
 
             <script>
-                // Fetch and display media files
                 fetch('/api/media')
                     .then(response => response.json())
                     .then(data => {
@@ -81,22 +75,30 @@
                             const mediaItem = document.createElement('div');
                             mediaItem.className = 'p-4 bg-gray-800 rounded-md shadow-md';
 
-                            // Check if the file is an image or video
                             const isImage = /\.(png|jpe?g|gif)$/i.test(file);
                             const isVideo = /\.mp4$/i.test(file);
 
                             if (isImage) {
+                                const imageLink = document.createElement('a');
+                                imageLink.href = `/i/${encodeURIComponent(file)}`;
+                                imageLink.setAttribute('data-fancybox', 'gallery');
                                 const image = document.createElement('img');
                                 image.src = `/raw/i/${encodeURIComponent(file)}`;
                                 image.alt = 'Image';
-                                image.className = 'max-w-full max-h-full';
-                                mediaItem.appendChild(image);
+                                image.className = 'max-w-full max-h-full cursor-pointer';
+                                imageLink.appendChild(image);
+                                mediaItem.appendChild(imageLink);
                             } else if (isVideo) {
+                                const videoLink = document.createElement('a');
+                                videoLink.href = `/i/${encodeURIComponent(file)}`;
+                                videoLink.setAttribute('data-fancybox', 'gallery');
                                 const video = document.createElement('video');
-                                video.src = `/raw/${encodeURIComponent(file)}`;
+                                video.src = `/raw/i/${encodeURIComponent(file)}`;
                                 video.controls = true;
-                                video.className = 'max-w-full max-h-full';
-                                mediaItem.appendChild(video);
+                                video.autoplay = true;
+                                video.className = 'max-w-full max-h-full cursor-pointer';
+                                videoLink.appendChild(video);
+                                mediaItem.appendChild(videoLink);
                             } else {
                                 const link = document.createElement('a');
                                 link.href = file;
@@ -105,10 +107,12 @@
                             }
 
                             mediaListElement.appendChild(mediaItem);
-                        });
+                        });                    
                     })
                     .catch(error => console.error('Error fetching media files:', error));
             </script>
+            <script src="https://unpkg.com/simplebar@5.3.0/dist/simplebar.min.js" integrity="sha384-Htn6P9GQ9tTTOVS17d38zP9MFCbBnH94I7zDn5wS+cuJADP7EhX2PtpQg9xDjzn+" crossorigin="anonymous"></script>
+
         </main>
     </div>
 </body>

@@ -2,9 +2,11 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#DC603A">
+    <meta property="og:title" content="<%= filename %>">
+    <meta property="og:image" content="/raw/i/<%= filename %>">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../Styles/Global.css">
 </head>
@@ -17,33 +19,30 @@
             class="w-full h-auto max-h-96 object-cover cursor-pointer rounded-md shadow-md hover:shadow-lg" />
         <% } else if (fileType === "video") { %>
         <div class="relative">
-            <video controls width="100%" height="auto"
-                class="w-full max-h-96 cursor-pointer rounded-md shadow-md hover:shadow-lg">
+            <video controls autoplay class="w-full max-h-96 cursor-pointer rounded-md shadow-md hover:shadow-lg">
                 <source src="/raw/i/<%= filename %>" type="video/mp4" />
                 Your Browser Does Not Support The Video Tag.
             </video>
-            <div class="absolute inset-0 flex items-center justify-center">
-                <svg class="w-16 h-16 text-white opacity-50 hover:opacity-75" fill="currentColor"
-                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M12 4V2L8 6l4 4v2l-4-4-4 4V8H2V4h10z"></path>
-                </svg>
-            </div>
         </div>
         <% } else { %>
         <p class="text-center text-gray-400 text-lg">Others</p>
         <% } %>
 
-        <!-- Buttons -->
         <div class="flex justify-center mt-8 space-x-4">
             <a href="/raw/i/<%= filename %>"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-105">View
-                Raw</a>
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-105">View Raw</a>
             <a href="/raw/i/<%= filename %>" download="<%= filename %>"
                 class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-105">Download</a>
+            <% if (loggedIn) { %>
+                <button 
+                    id="deleteButton"
+                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-105">
+                    Delete
+                </button>
+            <% } %>
         </div>
 
-        <!-- Uploaded Date and Time and Viewed By -->
+
         <div class="mt-8 flex justify-between w-full"> 
             <div class="text-gray-400 mr-8">
                 <% if (uploadInfo) { %>
@@ -58,7 +57,8 @@
                 <span class="text-yellow-300 font-bold" id="viewCount"></span>
             </div>
         </div>
-
+    
+        
         <script>
             fetch('/api/viewcount/<%= filename %>')
                 .then(response => response.json())
@@ -69,6 +69,24 @@
                     }
                 })
                 .catch(error => console.error('Error fetching view count:', error));
+        
+            document.addEventListener('DOMContentLoaded', function() {
+                const deleteButton = document.getElementById('deleteButton');
+                if (deleteButton) {
+                    deleteButton.addEventListener('click', function() {
+                        const filename = '<%= filename %>';
+                        fetch(`/api/delete/${filename}`, {
+                            method: 'DELETE',
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            alert(data.message);
+                            window.location.href = '/dashboard';
+                        })
+                        .catch(error => console.error('Error Deleting File:', error));
+                    });
+                }
+            });
         </script>
     </div>
 </body>

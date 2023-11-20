@@ -12,17 +12,15 @@ router.use(express.json());
 router.use(bodyParser.json());
 router.use(express.urlencoded({ extended: true }));
 router.use(session({
-    secret: 'OpenX',
+    secret: config.Web.Secret,
     resave: false,
     saveUninitialized: true,
 }));
 
 
-// Routing
-// UploadApi Router
 const uploadRouter = require('./Api/uploadApi'); 
 router.use('/api', uploadRouter); 
-// UploadInfoApi Router
+
 const getImageInfo = async () => {
   const uploadsPath = path.join(__dirname, '../../Uploads');
   const imageInfo = [];
@@ -63,7 +61,6 @@ router.use(async (req, res, next) => {
 });
 
 
-// Views Router
 const views = new Map();
 router.use((req, res, next) => {
   if (!isBot(req.headers['user-agent'])) {
@@ -91,8 +88,16 @@ const loginRoute = require('./Api/loginApi.js');
 router.use('/api/login', loginRoute);
 
 // LogoutApi Router
-const logoutRoute = require('./Api/logoutApi.js');
-router.use('/api', logoutRoute);
+router.use('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      console.error('Logout error:', err);
+      return res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+
+    res.redirect('/login');
+  });
+});
 
 // DashboardApi Router
 const dashboardRoute = require('./Api/dashboardApi.js');
@@ -108,7 +113,9 @@ router.use('/api', viewFilesRoute);
 
 // Pages
 router.get('/', (req, res) => {
-  res.render('index.ejs');
+  const loggedIn = req.session.user && req.session.user.authenticated;
+
+  res.render('index.ejs', {loggedIn});
 });
 
 router.get('/login', (req, res) => {
@@ -118,11 +125,11 @@ router.get('/login', (req, res) => {
 
 
 router.get('/dashboard', (req, res) => {
-  res.render('dashboard/index.ejs');
+  res.render('dashboard/index.ejs', {username: config.Admin.username});
 });
 
 router.get('/dashboard/files', (req, res) => {
-  res.render('dashboard/files.ejs');
+  res.render('dashboard/files.ejs', {username: config.Admin.username});
 });
 
 
@@ -131,11 +138,16 @@ router.get('/i/:filename', (req, res) => {
   if (fileType === 'other') {
     return res.sendStatus(400);
   }
+
   const uploadInfo = req.imageInfo.find(
     (image) => image.filename === req.params.filename
   );
-  res.render('i/index.ejs', { filename: req.params.filename, fileType, uploadInfo });
+
+  const loggedIn = req.session.user && req.session.user.authenticated;
+
+  res.render('i/index.ejs', { filename: req.params.filename, fileType, uploadInfo, loggedIn });
 });
+
 
 router.get('/raw/i/:filename', async (req, res, next) => {
   let fileName = req.params.filename;
@@ -153,6 +165,47 @@ router.get('/raw/i/:filename', async (req, res, next) => {
 
   res.sendFile(filePath);
 });
+
+
+const uploadFolder = path.join(__dirname, '../../', 'Uploads');
+
+const findFile = async (directoryPath, filename) => {
+  const files = await fs.readdir(directoryPath, { withFileTypes: true });
+
+  for (const file of files) {
+    const filePath = path.join(directoryPath, file.name);
+
+    if (file.isDirectory()) {
+      const foundFile = await findFile(filePath, filename);
+      if (foundFile) {
+        return foundFile;
+      }
+    } else if (file.name === filename) {
+      return filePath;
+    }
+  }
+
+  return null;
+};
+
+router.delete('/api/delete/:filename', async (req, res) => {
+  const filename = req.params.filename;
+
+  try {
+    const filePath = await findFile(uploadFolder, filename);
+
+    if (filePath) {
+      await fs.unlink(filePath);
+      res.json({ success: true, message: 'File Deleted Successfully' });
+    } else {
+      res.status(404).json({ success: false, message: 'File Not Found' });
+    }
+  } catch (error) {
+    console.error('Error deleting file:', error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+});
+
 
 
 module.exports = router;
