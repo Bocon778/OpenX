@@ -11,6 +11,7 @@ ShareX Upload Server
 
 <details open>
   <summary>Installation</summary>
+  
 # Installation (Ubuntu, Debian)
 
 ```bash
