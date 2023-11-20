@@ -91,13 +91,13 @@ Password: Admin
 
 
 # Todo
-[ ] Url Shortnetr
-[ ] Paste Bin
-[ ] Multi-User
-[ ] Multi-Database Support
-[ ] Discord Bot Integration
-[ ] 2FA System
-[ ] Api
+[ ] Url Shortnetr<br />
+[ ] Paste Bin<br />
+[ ] Multi-User<br />
+[ ] Multi-Database Support<br />
+[ ] Discord Bot Integration<br />
+[ ] 2FA System<br />
+[ ] Api<br />
 
 # Credits
 Thanks To [@flaxeneel2](https://github.com/flaxeneel2/) For Fixing Backend Issues I Made.<br />
