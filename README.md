@@ -9,8 +9,8 @@ ShareX Upload Server
 - Frontend Upload Page [Example](https://demo-openx.wizq.me/i/07kZNXFt.png)
 
 
-<Installtion open>
-  
+<details open>
+  <summary>Installation</summary>
 # Installation (Ubuntu, Debian)
 
 ```bash
@@ -49,7 +49,7 @@ You can keep your server runing forever if you use a process manager, like pm2. 
 `pm2 start Src/index.js` To Start The OpenX Forever
 `pm2 monit` To View Logs 
 
-</Installtion>
+</details>
 
 
 
