@@ -91,7 +91,7 @@ Password: Admin
 
 
 # Todo
-[ ] Url Shortnetr<br />
+[ ] Url Shortner<br />
 [ ] Paste Bin<br />
 [ ] Multi-User<br />
 [ ] Multi-Database Support<br />
