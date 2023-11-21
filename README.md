@@ -81,10 +81,10 @@ Username: Admin<br />
 Password: Admin
 
 <h2>Few Images</h2>
-[image](https://github.com/Wizqdev/OpenX/assets/87972700/db562b06-a324-4f72-b4f2-a874bec1f3df)<br />
-![image](https://github.com/Wizqdev/OpenX/assets/87972700/2fb4de3a-80d5-4b7f-a162-276c58842be2)<br />
-![image](https://github.com/Wizqdev/OpenX/assets/87972700/67723c4d-0748-495a-b911-a30ea4bff9bf)<br />
-![image](https://github.com/Wizqdev/OpenX/assets/87972700/8c16fa18-2606-4544-854e-e3c77859d765)<br />
+![image1](https://github.com/Wizqdev/OpenX/assets/87972700/db562b06-a324-4f72-b4f2-a874bec1f3df)<br />
+![image2](https://github.com/Wizqdev/OpenX/assets/87972700/2fb4de3a-80d5-4b7f-a162-276c58842be2)<br />
+![image3](https://github.com/Wizqdev/OpenX/assets/87972700/67723c4d-0748-495a-b911-a30ea4bff9bf)<br />
+![image4](https://github.com/Wizqdev/OpenX/assets/87972700/8c16fa18-2606-4544-854e-e3c77859d765)<br />
 
 
 <h2>Hosted At DBH</h2>
