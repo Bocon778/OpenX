@@ -100,6 +100,6 @@ Password: Admin
 [ ] Api<br />
 
 # Credits
-Thanks To [@flaxeneel2](https://github.com/flaxeneel2/) For Fixing Backend Issues I Made.<br />
+Thanks To [@flaxeneel2](https://github.com/flaxeneel2/) For Helping Me Make Backend!<br />
 Thanks To [@WilliamDavidHarrison](https://github.com/WilliamDavidHarrison) For Providing The Project Name<br />
 Thanks To [@Caliwyr](https://github.com/Caliwyr) For Providing Ideas To Implement In This Project
