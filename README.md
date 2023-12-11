@@ -102,4 +102,4 @@ Password: Admin
 # Credits
 Thanks to [@flaxeneel2](https://github.com/flaxeneel2/) for helping create the backend.<br />
 Thanks to [@WilliamDavidHarrison](https://github.com/WilliamDavidHarrison) for providing the name for the project.<br />
-Thanks to [@Caliwyr](https://github.com/Caliwyr) for giving ideas to implent within the project.<br />
+Thanks to [@Caliwyr](https://github.com/Caliwyr) for giving ideas to implement within the project.<br />
