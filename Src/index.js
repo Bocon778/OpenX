@@ -18,7 +18,7 @@ console.log('╚█████╔╝██║░░░░░██████�
 console.log('░╚════╝░╚═╝░░░░░╚══════╝╚═╝░░╚══╝╚═╝░░╚═╝')
 console.log('‎')
 console.log('|Creator: github.com/Wizqdev           |')
-console.log('|Creator: Website: https://wizq.me     |')
+console.log('|Creator Website: https://wizq.me     |')
 console.log('|Contact: https://wizq.dev/discord     |')
 console.log('‎')
 
